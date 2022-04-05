@@ -1,0 +1,21 @@
+.cartItem {
+    display: flex;
+    margin: 2rem 0;
+}
+
+.cartItem div {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    width: 100%;
+    border-bottom: 1px solid #a3a3a3;
+    padding-bottom: .8rem;
+}
+
+.trashIcon {
+    width: 13px;
+    margin-right: 2rem;
+    color: #88f0ff;
+    position: relative;
+    top: -.5rem;
+}
