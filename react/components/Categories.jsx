@@ -1,11 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { ThemeContextProvider } from "../context/ThemeContext";
 import { getTheme } from "../theming";
 
 export function Categories({ setCategory }) {
   const [categories, setCategories] = useState([]);
-  const { theme } = useContext(ThemeContextProvider);
 
   useEffect(() => {
     // const xhr = new XMLHttpRequest();
@@ -30,10 +28,7 @@ export function Categories({ setCategory }) {
   }, []);
 
   return (
-    <CustomSelect
-      theme={getTheme(theme)}
-      onChange={(e) => setCategory(parseInt(e.target.value))}
-    >
+    <CustomSelect onChange={(e) => setCategory(parseInt(e.target.value))}>
       <option value="0">Tout</option>
       {categories.map((category) => (
         <option value={category.id} key={category.id}>

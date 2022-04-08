@@ -3,14 +3,11 @@ import { useEffect, useState, useContext } from "react";
 import { Loader } from "./Loader";
 import { CartContextProvider } from "../context/CartContext";
 import styled from "styled-components";
-import { ThemeContextProvider } from "../context/ThemeContext";
-import { getTheme } from "../theming";
 
 export function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { cartUpdated, setCartUpdated } = useContext(CartContextProvider);
-  const { theme } = useContext(ThemeContextProvider);
 
   useEffect(() => {
     async function getCart() {
@@ -56,7 +53,6 @@ export function Cart() {
         )}
       </div>
       <EmptyCardButton
-        theme={getTheme(theme)}
         onClick={() => {
           handleClick(cartItems);
         }}

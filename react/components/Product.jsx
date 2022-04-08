@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { CartContextProvider } from "../context/CartContext";
 import styled from "styled-components";
-import { ThemeContextProvider } from "../context/ThemeContext";
 import { getTheme } from "../theming";
 
 const colors = {
@@ -12,7 +11,6 @@ const colors = {
 export function Product({ product }) {
   const [stock, setStock] = useState();
   const { setCartUpdated } = useContext(CartContextProvider);
-  const { theme } = useContext(ThemeContextProvider);
 
   async function handleClick(productId, amount) {
     const fetchInit = {
@@ -42,7 +40,7 @@ export function Product({ product }) {
   }
 
   return (
-    <ProductContainer theme={getTheme(theme)} key={product.id}>
+    <ProductContainer key={product.id}>
       <img src={"./uploads/" + product.image} alt="image of the product" />
       <ProductInfo>
         <ProductFlex>
@@ -74,10 +72,8 @@ const ProductContainer = styled.div`
   border-radius: ${condition ? littleBorderRadius : bigBorderRadius};
   width: 70rem;
   margin: 1rem 0;
-  background-color: ${({ theme }) =>
-    theme.components !== undefined && theme.components.background};
-  color: ${({ theme }) =>
-    theme.components !== undefined && theme.components.textColor};
+  background-color: ${({ theme }) => theme.components.background};
+  color: ${({ theme }) => theme.components.textColor};
 
   & img {
     margin-right: 2rem;
