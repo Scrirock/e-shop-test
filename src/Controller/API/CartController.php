@@ -56,8 +56,13 @@ class CartController extends AbstractController {
 
         }
 
+        elseif ($product->getStock() === 0 && $quantity !== -1) {
+            $this->returnError("Le stock veux pas fais autre chose");
+        }
+
         elseif ($cartItem && $cartItem->getQuantity() + $quantity <= 0) {
             $this->em->remove($cartItem);
+            $product->setStock($product->getStock() + -$quantity);
             $this->em->flush();
             $this->em->refresh($cart);
 

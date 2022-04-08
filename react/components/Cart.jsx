@@ -1,11 +1,16 @@
-import "./Cart.css";
-import { CartItem } from "../CartItem/CartItem";
-import { useEffect, useState } from "react";
-import { Loader } from "../Loader/Loader";
+import { CartItem } from "./CartItem";
+import { useEffect, useState, useContext } from "react";
+import { Loader } from "./Loader";
+import { CartContextProvider } from "../context/CartContext";
+import styled from "styled-components";
+import { ThemeContextProvider } from "../context/ThemeContext";
+import { getTheme } from "../theming";
 
-export function Cart({ cartUpdated, setCartUpdated }) {
+export function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { cartUpdated, setCartUpdated } = useContext(CartContextProvider);
+  const { theme } = useContext(ThemeContextProvider);
 
   useEffect(() => {
     async function getCart() {
@@ -35,9 +40,9 @@ export function Cart({ cartUpdated, setCartUpdated }) {
   }
 
   return (
-    <div className="cartContainer">
-      <p className="cartTitle">Vos articles</p>
-      <div className="cartItemContainer">
+    <CartContainer>
+      <CartTitle>Vos articles</CartTitle>
+      <div>
         {isLoading ? (
           <Loader />
         ) : (
@@ -50,14 +55,39 @@ export function Cart({ cartUpdated, setCartUpdated }) {
           ))
         )}
       </div>
-      <button
-        className="emptyCartButton"
+      <EmptyCardButton
+        theme={getTheme(theme)}
         onClick={() => {
           handleClick(cartItems);
         }}
       >
         Vider le panier
-      </button>
-    </div>
+      </EmptyCardButton>
+    </CartContainer>
   );
 }
+
+const CartContainer = styled.div`
+  position: relative;
+  margin: 2rem;
+  padding: 2rem;
+  border: 1px solid #a3a3a3;
+  border-radius: 1rem;
+  width: 30rem;
+  height: 50rem;
+`;
+
+const CartTitle = styled.h2`
+  font-size: 2.3rem;
+`;
+
+const EmptyCardButton = styled.button`
+  position: absolute;
+  bottom: 1.5rem;
+  right: 2.5rem;
+  padding: 0.8rem;
+  border: 1px solid #a3a3a3;
+  border-radius: 1rem;
+  background-color: ${({ theme }) => theme.components.background};
+  color: ${({ theme }) => theme.components.textColor};
+`;

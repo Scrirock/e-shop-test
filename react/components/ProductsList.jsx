@@ -1,8 +1,8 @@
-import "./ProductsList.css";
-import { Product } from "../Product/Product";
+import { Product } from "./Product";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 
-export function ProductsList({ setCartUpdated, category }) {
+export function ProductsList({ category }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -16,16 +16,16 @@ export function ProductsList({ setCartUpdated, category }) {
   }, []);
 
   return (
-    <div className="productsList">
+    <List>
       {products
         .filter((product) => category === 0 || product.category.id === category)
         .map((product) => (
-          <Product
-            key={product.id}
-            product={product}
-            setCartUpdated={setCartUpdated}
-          />
+          <Product key={product.id} product={product} />
         ))}
-    </div>
+    </List>
   );
 }
+
+const List = styled.div`
+  margin-top: 2rem;
+`;

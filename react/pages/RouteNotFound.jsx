@@ -1,12 +1,18 @@
-import "./RouteNotFound.css";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
 
 export function RouteNotFound() {
   const params = useParams();
 
   return (
-    <div className="error404">
+    <Error>
       Erreur 404, la page <strong>{params["*"]}</strong> n'existe pas
-    </div>
+    </Error>
   );
 }
+
+const Error = styled.div`
+  text-align: center;
+  font-size: 5rem;
+  color: #a9211e;
+`;

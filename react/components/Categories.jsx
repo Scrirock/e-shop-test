@@ -1,8 +1,11 @@
-import "./Categories.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import styled from "styled-components";
+import { ThemeContextProvider } from "../context/ThemeContext";
+import { getTheme } from "../theming";
 
 export function Categories({ setCategory }) {
   const [categories, setCategories] = useState([]);
+  const { theme } = useContext(ThemeContextProvider);
 
   useEffect(() => {
     // const xhr = new XMLHttpRequest();
@@ -27,13 +30,24 @@ export function Categories({ setCategory }) {
   }, []);
 
   return (
-    <select onChange={(e) => setCategory(parseInt(e.target.value))}>
+    <CustomSelect
+      theme={getTheme(theme)}
+      onChange={(e) => setCategory(parseInt(e.target.value))}
+    >
       <option value="0">Tout</option>
       {categories.map((category) => (
         <option value={category.id} key={category.id}>
           {category.name}
         </option>
       ))}
-    </select>
+    </CustomSelect>
   );
 }
+
+const CustomSelect = styled.select`
+  width: 25rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: ${({ theme }) => theme.components.background};
+  color: ${({ theme }) => theme.components.textColor};
+`;
